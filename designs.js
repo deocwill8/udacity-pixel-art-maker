@@ -12,16 +12,17 @@ let submitBtn = document.getElementById('btnSubmit');
 selectedColor.addEventListener("change", pickColor);
 
  function pickColor() {
-  storedColor = selectedColor.value;
-  console.log(selectedColor.value);
+    console.log(selectedColor.value);
+    storedColor = selectedColor.value;
+    console.log(selectedColor.value);
  }
 
 // When size is submitted by the user, call makeGrid()
 submitBtn.addEventListener("click", makeGrid);
 
-function makeGrid(e) {
+function makeGrid(event) {
   // Your code goes here!
-  e.preventDefault();
+  event.preventDefault();
   
   for(let i = 0; i < gridHeight.value; i++){
     row = document.createElement("tr"); 
@@ -31,11 +32,14 @@ function makeGrid(e) {
         row.appendChild(data);
         }   
     }
-    data.addEventListener('click', changeCellColor);
 }
 
+table.addEventListener('click', changeCellColor);
 
-function changeCellColor() {
-    console.log('cell has been clicked');
-    data.style.backgroundColor = storedColor;
+function changeCellColor(event) {
+    if (event.target.nodeName === 'TD') {
+        event.target.style.backgroundColor = storedColor;
+    } else {
+        console.log('you have not clicked a cell');
+    }
 }
