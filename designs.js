@@ -1,45 +1,41 @@
-// Select color input
-let selectedColor, storedColor, gridHeight, gridWidth, table, rows;
 
-//JS function to get the color selected by user
-function pickColor() {
-    //select color
-    selectedColor = document.getElementById("colorPicker");
-    selectedColor.addEventListener("click", pickColor);
-    //store selected color
-    storedColor = selectedColor.value;
-}
+let selectedColor = document.getElementById('colorPicker');
+let storedColor;
+let row = document.createElement("tr"); 
+let data = document.createElement("td");
+let gridHeight = document.getElementById('inputHeight');
+let gridWidth = document.getElementById('inputWidth');
+let table = document.getElementById('pixelCanvas');
+let submitBtn = document.getElementById('btnSubmit');
+
+// Select color input
+selectedColor.addEventListener("change", pickColor);
+
+ function pickColor() {
+  storedColor = selectedColor.value;
+  console.log(selectedColor.value);
+ }
 
 // When size is submitted by the user, call makeGrid()
+submitBtn.addEventListener("click", makeGrid);
+
 function makeGrid(e) {
-    //prevents the form from submitting and refreshing the page
-    e.preventDefault();
-    
-
-    //create rows based on input from user
-    gridHeight = $("#inputHeight").val();
-    table = $('#pixelCanvas');
-
-    for(let height = 0; height < gridHeight; height++){
-       table.append("<tr></tr>");
+  // Your code goes here!
+  e.preventDefault();
+  
+  for(let i = 0; i < gridHeight.value; i++){
+    row = document.createElement("tr"); 
+    table.appendChild(row);
+    for(let i = 0; i < gridWidth.value; i++){
+        data = document.createElement("td");
+        row.appendChild(data);
+        }   
     }
-
-    //create columns based on input from user
-    gridWidth = $("#inputWidth").val();
-    rows = $('tr');
-    
-    for(let width = 0; width < gridWidth; width++){
-        rows.append("<td></td>");
-        changeCellColor();
-    }
+    data.addEventListener('click', changeCellColor);
 }
 
 
-function changeCellColor(){
-    table.on("click", "td", function() {
-        $(this).css("background-color", storedColor);
-    });
+function changeCellColor() {
+    console.log('cell has been clicked');
+    data.style.backgroundColor = storedColor;
 }
-
-//JS to listen for the submit button being clicked, if so call makeGrid()
-document.getElementById("submitBtn").addEventListener("click", makeGrid);
